@@ -11,10 +11,12 @@ import Frye.models.Pet;
 import Frye.models.PetType;
 import Frye.models.Speciality;
 import Frye.models.Vet;
+import Frye.models.Visit;
 import Frye.services.OwnerService;
 import Frye.services.PetTypeService;
 import Frye.services.SpecialtyService;
 import Frye.services.VetService;
+import Frye.services.VisitService;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -23,13 +25,15 @@ public class DataLoader implements CommandLineRunner {
 	private final VetService vs;
 	private final PetTypeService pts;
 	private final SpecialtyService sps;
+	private final VisitService vis;
 
-	public DataLoader(OwnerService os, VetService vs, PetTypeService pts, SpecialtyService sps) {
+	public DataLoader(OwnerService os, VetService vs, PetTypeService pts, SpecialtyService sps, VisitService vis) {
 		super();
 		this.os = os;
 		this.vs = vs;
 		this.pts = pts;
 		this.sps = sps;
+		this.vis = vis;
 	}
 
 	@Override
@@ -37,12 +41,10 @@ public class DataLoader implements CommandLineRunner {
 		// TODO Auto-generated method stub
 
 		int count = pts.findAll().size();
-		
-		if(count == 0) {
+
+		if (count == 0) {
 			loadData();
 		}
-		
-		
 
 	}
 
@@ -98,6 +100,13 @@ public class DataLoader implements CommandLineRunner {
 		o2.getPets().add(wuspet);
 
 		os.save(o2);
+
+		Visit vs1 = new Visit();
+		vs1.setPet(wuspet);
+		vs1.setDate(LocalDate.now());
+		vs1.setDescription("wu's visit pet");
+
+		vis.save(vs1);
 
 		System.out.println("Loading Owners...");
 
