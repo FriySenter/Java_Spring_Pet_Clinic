@@ -2,12 +2,14 @@ package Frye.services.map;
 
 import java.util.Set;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import Frye.models.Speciality;
 import Frye.services.SpecialtyService;
 
 @Service
+@Profile({"default", "map"})
 public class SpecialitesServiceMap extends AbstractMapService<Speciality, Long> implements SpecialtyService {
 
 	@Override
